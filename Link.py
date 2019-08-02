@@ -36,13 +36,13 @@ class Link:
         else:
             return 0
 
-    @classmethod
-    def normWeights(self, weights):
-        print ('before ', weights)
-        minW = np.amin(weights)
-        print( minW)
-        maxW = np.amax(weights)
-        print (maxW)
-        out = (weights - float(minW))/(maxW-minW)
-        print( 'after ', out)
-        return (weights - minW)/(maxW-minW)
+#    @classmethod
+#    def normWeights(self, weights):
+#        print ('before ', weights)
+#        minW = np.amin(weights)
+#        print( minW)
+#        maxW = np.amax(weights)
+#        print (maxW)
+#        out = (weights - float(minW))/(maxW-minW)
+#        print( 'after ', out)
+#        return (weights - minW)/(maxW-minW)
