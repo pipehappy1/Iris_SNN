@@ -1,0 +1,26 @@
+*~
+*.bak
+*.fcstd1
+*-cache.lib
+*.kicad_pcb-bak
+*-info-cache
+*.bin
+*.d
+*.elf
+*.o
+*.egg-info
+__pycache__
+*.log
+*.coverage
+htmlcov/
+
+# document output directoy
+_api/
+_build/
+_build
+
+# Mac files
+.DS_Store
+
+# don't track jetbrain file
+.idea
