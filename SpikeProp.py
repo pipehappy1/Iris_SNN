@@ -74,8 +74,7 @@ class SpikeProp:
 
     # function to simulate a forward pass through the network
     def forwardProp(self, network, inLayer):
-        #global timeLimit
-        #timeStep = 1
+
         noLayers = len(network.layers)
         time = 0
 
@@ -201,9 +200,7 @@ class SpikeProp:
         print(gradient - approx)
 
     # method that modifies the weights of each neuron using the SpikeProp algorithm and gradient descent
-    @classmethod
-    def backProp(self, network, expSpikeT, inLayer):
-        global learningRate
+    def backProp(self, network, expSpikeT, inLayer, learningRate):
 
         net = deepcopy(network)
 
@@ -294,7 +291,6 @@ class SpikeProp:
     # method to train the neural network, given the training data (inputS) or the input time
     # sequence of spikes for the input neurons and the expected spiking times (outputS)
     def train(self, network, inputS, outputS, learningR, epochs, sample, deltat,  setosa, versicolor, virginica):
-        global learningRate
         learningRate = learningR
         lenTimeSeq, inNeurons = inputS.shape
 
@@ -313,15 +309,14 @@ class SpikeProp:
                 if outputS[inIndex] == 1:
                     expSpikes[0] = setosa
                 elif outputS[inIndex] == 2:
-                    expSpikes[0] =  versicolor
-
+                    expSpikes[0] = versicolor
                 else:
                     expSpikes[0] = virginica
 
                 predSpikes = np.zeros((lenTimeSeq))
                 predSpikes = self.forwardProp(network, inLayer)
 
-                network = self.backProp(network, expSpikes, inLayer)
+                network = self.backProp(network, expSpikes, inLayer, learningRate)
                 print('layer', inIndex, ' input', inLayer)
                 print('Actual spikes: ', predSpikes, 'Expected spikes: ', expSpikes)
                 #print('Expected spikes: ', expSpikes)
