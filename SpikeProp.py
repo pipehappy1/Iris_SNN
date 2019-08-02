@@ -7,10 +7,9 @@ from copy import deepcopy
 
 class SpikeProp:
     def __init__(self, OutNeurons,deltaT, tau, terminals,ts):
-        global  NoOutNeurons, timeLimit, timeStep
-        NoOutNeurons = OutNeurons
-        timeStep = ts
-        timeLimit = deltaT + 2 * (tau + terminals)
+        self.NoOutNeurons = OutNeurons
+        self.timeStep = ts
+        self.timeLimit = deltaT + 2 * (tau + terminals)
     # mean squared error function
     @classmethod
     def errorFMSE(self, actualSpike, expSpikeT):
@@ -72,14 +71,13 @@ class SpikeProp:
         return currLayer
 
     # function to simulate a forward pass through the network
-    @classmethod
     def forwardProp(self, network, inLayer):
         #global timeLimit
         #timeStep = 1
         noLayers = len(network.layers)
         time = 0
 
-        while time <= timeLimit:
+        while time <= self.timeLimit:
             # compute the update for the first layer, using the input spikes
             updatedLayer = self.forwardPropL(inLayer, network.layers[0], 0, time)
             network.layers[0] = updatedLayer
@@ -88,7 +86,7 @@ class SpikeProp:
                 # check for updates for the layers of the network
                 updatedLayer = self.forwardPropL(network.layers[layer - 1], network.layers[layer], layer, time)
                 network.layers[layer] = updatedLayer
-            time += timeStep
+            time += self.timeStep
 
         predSpikes = Network.getFireTimesLayer(network.layers[-1])
         return predSpikes
@@ -307,8 +305,8 @@ class SpikeProp:
             for inIndex in range(lenTimeSeq):
                 inLayer = inputS[inIndex, :]
 
-                expSpikes = np.zeros(NoOutNeurons)
-                wrongSpike = np.zeros(NoOutNeurons)
+                expSpikes = np.zeros(self.NoOutNeurons)
+                wrongSpike = np.zeros(self.NoOutNeurons)
 
                 if outputS[inIndex] == 1:
                     expSpikes[0] = setosa
@@ -346,7 +344,7 @@ class SpikeProp:
         for inIndex in range(lenTimeSeq):
             inLayer = inputS[inIndex, :]
             print('layer', inIndex, ' input', inLayer)
-            expSpikes = np.zeros(NoOutNeurons)
+            expSpikes = np.zeros(self.NoOutNeurons)
 
             if outputS[inIndex] == 1:
                 expSpikes[0] =  setosa
