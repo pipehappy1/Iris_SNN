@@ -316,10 +316,10 @@ class SpikeProp:
                 predSpikes = np.zeros((lenTimeSeq))
                 predSpikes = self.forwardProp(network, inLayer)
 
-                #print('inspect')
-                #for x_layer in network.layers:
-                #    for x_neuron in x_layer:
-                #        print(x_neuron.fireTime)
+                # print('inspect')
+                # for x_layer in network.layers:
+                #     for x_neuron in x_layer:
+                #         print(x_neuron.fireTime)
 
                 print('Sample index', inIndex, ' input', inLayer)
                 print('Actual spikes: ', predSpikes, 'Expected spikes: ', expSpikes)                

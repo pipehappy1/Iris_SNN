@@ -127,6 +127,7 @@ class AsyncSN:
 
         
         #stateVariable = self.intStateVar(preSNFTime, currTime, preSNTypes)
+        #
         ## print 'The state variable for neuron with presynaptic firing time ', preSNFTime, ' is ', stateVariable
         #if stateVariable >= self.threshold:
         #    # print '^^^^^^^^^^^^A new spike time was appended ', currTime
