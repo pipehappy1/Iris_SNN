@@ -79,7 +79,6 @@ class AsyncSN:
 
     # might want to make the same check against zero
     def lifFunctionDer(self, time, nType):
-
         div = 1 - (float(time) / self.tau)
         return div * math.exp(div) / self.tau
 
@@ -125,6 +124,13 @@ class AsyncSN:
             if stateVariable >= self.threshold:
                 # print '^^^^^^^^^^^^A new spike time was appended ', currTime
                 self.fireTime.append(currTime)
+
+        
+        #stateVariable = self.intStateVar(preSNFTime, currTime, preSNTypes)
+        ## print 'The state variable for neuron with presynaptic firing time ', preSNFTime, ' is ', stateVariable
+        #if stateVariable >= self.threshold:
+        #    # print '^^^^^^^^^^^^A new spike time was appended ', currTime
+        #    self.fireTime.append(currTime)
         return self.fireTime
 
     # function to displey the parameters and structure of a neuron

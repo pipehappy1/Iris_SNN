@@ -61,7 +61,7 @@ class SpikeProp:
             preSNFTime = prevLayer
             preSNTypes = np.ones(prevLayer.size)
 
-        # print 'The presynaptic types and firing times are ', preSNTypes, preSNFTime
+        # print('The presynaptic types and firing times are ', preSNTypes, preSNFTime)
 
         # simulate the passes through the network
         for n in range(noNeurons[0]):
@@ -316,14 +316,15 @@ class SpikeProp:
                 predSpikes = np.zeros((lenTimeSeq))
                 predSpikes = self.forwardProp(network, inLayer)
 
-                print('inspect')
-                for x_layer in network.layers:
-                    for x_neuron in x_layer:
-                        print(x_neuron.fireTime)
+                #print('inspect')
+                #for x_layer in network.layers:
+                #    for x_neuron in x_layer:
+                #        print(x_neuron.fireTime)
 
+                print('Sample index', inIndex, ' input', inLayer)
+                print('Actual spikes: ', predSpikes, 'Expected spikes: ', expSpikes)                
                 network = self.backProp(network, expSpikes, inLayer, learningRate)
-                print('layer', inIndex, ' input', inLayer)
-                print('Actual spikes: ', predSpikes, 'Expected spikes: ', expSpikes)
+
                 #print('Expected spikes: ', expSpikes)
                 sampleError = self.errorFMSE(predSpikes, expSpikes)
 
