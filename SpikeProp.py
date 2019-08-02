@@ -5,11 +5,13 @@ from DataProc import *
 from decimal import *
 from copy import deepcopy
 
+
 class SpikeProp:
     def __init__(self, OutNeurons,deltaT, tau, terminals,ts):
         self.NoOutNeurons = OutNeurons
         self.timeStep = ts
         self.timeLimit = deltaT + 2 * (tau + terminals)
+
     # mean squared error function
     @classmethod
     def errorFMSE(self, actualSpike, expSpikeT):
