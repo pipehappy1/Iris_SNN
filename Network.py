@@ -8,6 +8,7 @@ from AsyncSN import *
 #and the values are the number of neurons on each layer, without considering the input layer
 class Network:
     def __init__(self, netLayout, inputNeurons, terminals, inhibN, threshold, tau,timeStep):
+
         layersNumber = netLayout.shape
 
         #numberInhibN = inhibN
@@ -16,6 +17,7 @@ class Network:
 
         #will have a size set by layersNumber[0]
         self.layers = list()
+
         for lyer in range(layersNumber[0]):
             neurons = netLayout[lyer]
             self.layers.append(np.empty((neurons),dtype=object))
@@ -26,11 +28,9 @@ class Network:
                 connections = netLayout[lyer-1]
 
             for n in range(neurons):
-                if lyer != layersNumber[0]:
-                    self.layers[lyer][n] = AsyncSN(connections, terminals, inhibN,threshold, tau,timeStep)
-                    inhibN -= 1
-                else:
-                    self.layers[lyer][n] = AsyncSN(connections, terminals, 0)
+                self.layers[lyer][n] = AsyncSN(connections, terminals, inhibN,
+                                               threshold, tau, timeStep)
+                inhibN -= 1
 
     #returns the last firing times of a layer of neurons
     @classmethod

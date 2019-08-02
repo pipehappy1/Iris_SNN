@@ -39,7 +39,8 @@ def main():
     learningRate = 0.01
     deltaT = maxvalue - minValue
     timeStep = 0.1
-    epochs = 2
+    # epochs = 2 # the origninal epoch
+    epochs = 1 # only for debug
     hidNeuron = 8
     tau = 8
     threshold = 1

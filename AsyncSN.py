@@ -7,13 +7,12 @@ from Link import *
 # contains constructor for individual neurons, and any function applied to individual neurons
 class AsyncSN:
     # to make connections have different number of terminals just send a list instead of integer for terminals parameter
-    def __init__(self, connections, terminals, inhibN,threshold1, tau1, timeStep):
-        global threshold,tau
+    def __init__(self, connections, terminals, inhibN, threshold1, tau1, timeStep):
         # record the firing time of the neuron
         self.fireTime = list()
         self.psp = list()
-        threshold = threshold1
-        tau = tau1
+        self.threshold = threshold1
+        self.tau = tau1
 
         # create the number of connections the current neuron has with the previous layer
         self.synapses = np.empty((connections), dtype=object)
@@ -25,13 +24,8 @@ class AsyncSN:
 
         # initialise each link as a connection element with different weights and delays
         for s in range(connections):
-            self.synapses[s] = Link(terminals, connections,threshold, tau,timeStep)
-    '''
-    @classmethod
-    def setThreshold(self, th):
-        global threshold
-        threshold = th
-    '''
+            self.synapses[s] = Link(terminals, connections, self.threshold, self.tau, timeStep)
+
     # returns the number of terminals of the neuron
     def getNTerminals(self):
         noTerminals = self.synapses[0].delays.shape
@@ -86,20 +80,18 @@ class AsyncSN:
     # a standard spike response function describing a postsynaptic potential
     # creates a leaky-integrate-and-fire neuron
     def lifFunction(self, time, nType):
-        global tau
 
         if time > 0:
-            div = float(time) / tau
+            div = float(time) / self.tau
             return div * nType * math.exp(1 - div)
         else:
             return 0
 
     # might want to make the same check against zero
     def lifFunctionDer(self, time, nType):
-        global tau
 
-        div = 1 - (float(time) / tau)
-        return div * math.exp(div) / tau
+        div = 1 - (float(time) / self.tau)
+        return div * math.exp(div) / self.tau
 
     def termContrDer(self, preSNFTime, actualSpike, termDelay, nType):
         time = float(actualSpike) - preSNFTime - termDelay
@@ -135,13 +127,12 @@ class AsyncSN:
     # based on the internal state variable of the neuron, check if it is generating an action potential
     # (spike) or not
     def actionPot(self, preSNFTime, currTime, preSNTypes):
-        global threshold
         # self.displaySN()
         #print("output:",t)
         if len(self.fireTime) == 0:
             stateVariable = self.intStateVar(preSNFTime, currTime, preSNTypes)
             # print 'The state variable for neuron with presynaptic firing time ', preSNFTime, ' is ', stateVariable
-            if stateVariable >= threshold:
+            if stateVariable >= self.threshold:
                 # print '^^^^^^^^^^^^A new spike time was appended ', currTime
                 self.fireTime.append(currTime)
             self.psp.append(stateVariable)
