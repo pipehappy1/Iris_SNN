@@ -34,7 +34,7 @@ class Network:
 
     #returns the last firing times of a layer of neurons
     @classmethod
-    def getFireTimesLayer(self, layer):
+    def getFireTimesLayer(cls, layer):
         noNeurons = layer.shape
         preSNFTime = np.zeros(noNeurons[0])
 
@@ -45,7 +45,7 @@ class Network:
         return preSNFTime
 
     @classmethod
-    def getTypesLayer(self, layer):
+    def getTypesLayer(cls, layer):
         noNeurons = layer.shape
         preSNTypes = np.zeros(noNeurons[0])
 

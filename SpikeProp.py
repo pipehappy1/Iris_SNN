@@ -39,7 +39,6 @@ class SpikeProp:
 
     # returns the currentLayer whose spiking times have been updated after the signal has gone through
     # the layer
-    @classmethod
     def forwardPropL(self, prevLayer, currLayer, lNo, time):
         # when there is only one neuron on the layer, an object is returned instead of an array, so
         # recast it
@@ -299,6 +298,7 @@ class SpikeProp:
         correctCount = 0
         for e in range(epochs):
             totalError = 0
+
             # inIndex represents the index of the spikes in the training data time sequence
             for inIndex in range(lenTimeSeq):
                 inLayer = inputS[inIndex, :]
@@ -315,6 +315,11 @@ class SpikeProp:
 
                 predSpikes = np.zeros((lenTimeSeq))
                 predSpikes = self.forwardProp(network, inLayer)
+
+                print('inspect')
+                for x_layer in network.layers:
+                    for x_neuron in x_layer:
+                        print(x_neuron.fireTime)
 
                 network = self.backProp(network, expSpikes, inLayer, learningRate)
                 print('layer', inIndex, ' input', inLayer)

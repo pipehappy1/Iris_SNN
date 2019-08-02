@@ -10,7 +10,6 @@ class AsyncSN:
     def __init__(self, connections, terminals, inhibN, threshold1, tau1, timeStep):
         # record the firing time of the neuron
         self.fireTime = list()
-        self.psp = list()
         self.threshold = threshold1
         self.tau = tau1
 
@@ -43,24 +42,15 @@ class AsyncSN:
         else:
             return -1
 
-    def getLastPSP(self):
-        if self.fireTime:
-            return self.fireTime[-1]
-        else:
-            return -1
-
-
     @classmethod
-    def getNType(self, neuron):
+    def getNType(cls, neuron):
         if isinstance(neuron, AsyncSN):
             return neuron.type
         else:
             return 1
 
     def resetSpikeTimes(self):
-        del self.fireTime[:]
-    def resetPSP(self):
-        del self.psp[:]
+        self.fireTime = list()
 
     def updateWeights(self, deltaW):
         # self.displaySN()
@@ -135,8 +125,8 @@ class AsyncSN:
             if stateVariable >= self.threshold:
                 # print '^^^^^^^^^^^^A new spike time was appended ', currTime
                 self.fireTime.append(currTime)
-            self.psp.append(stateVariable)
         return self.fireTime
+
     # function to displey the parameters and structure of a neuron
     def displaySN(self):
 
