@@ -51,19 +51,19 @@ def main():
     inputNeurons = data.shape
     netLayout = np.asarray([hidNeuron, OutNeurons])
 
-    SpikeProp(OutNeurons, deltaT, tau, terminals,timeStep)
+    spikeprop = SpikeProp(OutNeurons, deltaT, tau, terminals,timeStep)
 
     net = Network(netLayout, inputNeurons[1], terminals, inhibN,threshold, tau, timeStep)
     net.displaySNN()
-    SpikeProp.train(net, trainingInput, trainingTarget, learningRate, epochs, sample, deltaT,  setosa, versicolor, virginica)
+    spikeprop.train(net, trainingInput, trainingTarget, learningRate, epochs, sample, deltaT,  setosa, versicolor, virginica)
     # save the model to disk
     filename = 'IrisNet.sav'
     pickle.dump(net, open(filename, 'wb'))
     print("*****************************Training Completed*********************************")
     loaded_model = pickle.load(open(filename, 'rb'))
-    SpikeProp.test(loaded_model, testingInput, testingTarget, learningRate, sample, setosa, versicolor, virginica)
+    spikeprop.test(loaded_model, testingInput, testingTarget, learningRate, sample, setosa, versicolor, virginica)
     #SpikeProp.test(loaded_model, data, target, learningRate, sample, deltaT, setosa, versicolor, virginica)
     #net.displaySNN()
 
 if __name__ == "__main__":
-	main()
+    main()

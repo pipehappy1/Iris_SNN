@@ -293,7 +293,6 @@ class SpikeProp:
 
     # method to train the neural network, given the training data (inputS) or the input time
     # sequence of spikes for the input neurons and the expected spiking times (outputS)
-    @classmethod
     def train(self, network, inputS, outputS, learningR, epochs, sample, deltat,  setosa, versicolor, virginica):
         global learningRate
         learningRate = learningR
@@ -335,7 +334,6 @@ class SpikeProp:
 
 
 
-    @classmethod
     def test(self, network, inputS, outputS, learningR, sample,setosa, versicolor, virginica):
         global learningRate
         learningRate = learningR
